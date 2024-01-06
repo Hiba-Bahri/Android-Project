@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "409965272264",
+    "firebase_url": "https://android-project-21944-default-rtdb.firebaseio.com/",
+    "project_id": "android-project-21944",
+    "storage_bucket": "android-project-21944.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:409965272264:android:4103dc1f122d6657d159fd",
+        "android_client_info": {
+          "package_name": "com.tekup.androidproject"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZ70ecDj1ZuDRb9hlbCAk39idN3bX8gtg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:409965272264:android:faadc7489cb751dad159fd",
+        "android_client_info": {
+          "package_name": "com.tekup.tp4"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZ70ecDj1ZuDRb9hlbCAk39idN3bX8gtg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

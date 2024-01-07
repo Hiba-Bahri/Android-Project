@@ -82,4 +82,43 @@ Add the maggi masala on to it
 \nWait for 2 mins
 \nMaggi is ready!</string>
 
+    <string-array name="ad_Type">
+        <item>For rent</item>
+        <item>For sale</item>
+    </string-array>
+
+    <string-array name="estate_Type">
+        <item>House</item>
+        <item>Apartment</item>
+        <item>Field</item>
+    </string-array>
+
+    <string-array name="locations">
+        <item>Ariana</item>
+        <item>Beja</item>
+        <item>Ben Arous</item>
+        <item>Bizerte</item>
+        <item>Gabes</item>
+        <item>Gafsa</item>
+        <item>Jendouba</item>
+        <item>Kairouan</item>
+        <item>Kasserine</item>
+        <item>Kebili</item>
+        <item>Kef</item>
+        <item>Mahdia</item>
+        <item>Manouba</item>
+        <item>Medenine</item>
+        <item>Monastir</item>
+        <item>Nabeul</item>
+        <item>Sfax</item>
+        <item>Sidi Bouzid</item>
+        <item>Siliana</item>
+        <item>Sousse</item>
+        <item>Tataouine</item>
+        <item>Tozeur</item>
+        <item>Tunis</item>
+        <item>Zaghouan</item>
+    </string-array>
+
+
 </resources>

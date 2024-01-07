@@ -28,6 +28,7 @@ public class DetailedActivity extends AppCompatActivity {
             binding.detailPrice.setText(String.valueOf((int) price));
             binding.detailSurfaceArea.setText(String.valueOf((int) surfaceArea));
             binding.detailImage.setImageResource(image);
+            binding.detailNbRooms.setText(String.valueOf(nbRooms));
         }
     }
 }

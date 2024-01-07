@@ -7,18 +7,18 @@
     tools:context=".createAdvActivity">
 
     <Spinner
-        android:id="@+id/adType"
+        android:id="@+id/updateAdType"
         android:layout_width="125dp"
         android:layout_height="38dp"
         android:layout_marginTop="8dp"
         android:entries="@array/ad_Type"
-        app:layout_constraintEnd_toStartOf="@+id/estateType"
+        app:layout_constraintEnd_toStartOf="@+id/updateEstateType"
         app:layout_constraintHorizontal_bias="0.507"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <Spinner
-        android:id="@+id/estateType"
+        android:id="@+id/updateEstateType"
         android:layout_width="113dp"
         android:layout_height="38dp"
         android:layout_marginTop="8dp"
@@ -28,7 +28,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <Spinner
-        android:id="@+id/location"
+        android:id="@+id/updateLocation"
         android:layout_width="128dp"
         android:layout_height="36dp"
         android:layout_marginStart="36dp"
@@ -43,7 +43,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="140dp"
         android:layout_marginTop="16dp"
-        android:text="Add Advert"
+        android:text="Update Advert"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -76,10 +76,10 @@
         android:layout_marginTop="20dp"
         android:text="Location"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/adType" />
+        app:layout_constraintTop_toBottomOf="@+id/updateAdType" />
 
     <EditText
-        android:id="@+id/nbRoomsInput"
+        android:id="@+id/updateNbRoomsInput"
         android:layout_width="119dp"
         android:layout_height="36dp"
         android:layout_marginTop="8dp"
@@ -98,7 +98,7 @@
         android:layout_marginEnd="52dp"
         android:text="Number of rooms"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/estateType" />
+        app:layout_constraintTop_toBottomOf="@+id/updateEstateType" />
 
     <TextView
         android:id="@+id/textView6"
@@ -108,10 +108,10 @@
         android:layout_marginTop="12dp"
         android:text="Price"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/location" />
+        app:layout_constraintTop_toBottomOf="@+id/updateLocation" />
 
     <EditText
-        android:id="@+id/priceInput"
+        android:id="@+id/updatePriceInput"
         android:layout_width="127dp"
         android:layout_height="40dp"
         android:layout_marginStart="36dp"
@@ -123,7 +123,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
     <EditText
-        android:id="@+id/surfaceAreaInput"
+        android:id="@+id/updateSurfaceAreaInput"
         android:layout_width="128dp"
         android:layout_height="42dp"
         android:layout_marginTop="12dp"
@@ -142,7 +142,7 @@
         android:layout_marginEnd="84dp"
         android:text="Surface area"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nbRoomsInput" />
+        app:layout_constraintTop_toBottomOf="@+id/updateNbRoomsInput" />
 
     <TextView
         android:id="@+id/textView8"
@@ -152,10 +152,10 @@
         android:layout_marginTop="20dp"
         android:text="Description"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/priceInput" />
+        app:layout_constraintTop_toBottomOf="@+id/updatePriceInput" />
 
     <EditText
-        android:id="@+id/descInput"
+        android:id="@+id/updateDescInput"
         android:layout_width="284dp"
         android:layout_height="42dp"
         android:layout_marginStart="36dp"
@@ -168,23 +168,23 @@
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
     <Button
-        android:id="@+id/createBtn"
+        android:id="@+id/updateBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="120dp"
         android:layout_marginTop="16dp"
-        android:text="Add advert"
+        android:text="Update advert"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/uploadImageButton" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/updateImageView"
         android:layout_width="101dp"
         android:layout_height="89dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/descInput" />
+        app:layout_constraintTop_toBottomOf="@+id/updateDescInput" />
 
     <Button
         android:id="@+id/uploadImageButton"
@@ -193,7 +193,7 @@
         android:layout_marginStart="52dp"
         android:layout_marginTop="52dp"
         android:text="Upload Image"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/descInput"></Button>
+        app:layout_constraintStart_toEndOf="@+id/updateImageView"
+        app:layout_constraintTop_toBottomOf="@+id/updateDescInput"></Button>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

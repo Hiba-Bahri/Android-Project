@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra("estateType", dataArrayList.get(i).getEstateType());
                 intent.putExtra("adType", dataArrayList.get(i).getAdType());
                 intent.putExtra("location", dataArrayList.get(i).getLocation());
-                intent.putExtra("image", dataArrayList.get(i).getImage());
+                intent.putExtra("image", dataArrayList.get(i).getImageURL());
                 intent.putExtra("nbRooms", dataArrayList.get(i).getNbRooms());
                 intent.putExtra("price", dataArrayList.get(i).getPrice());
                 intent.putExtra("surfaceArea", dataArrayList.get(i).getSurfaceArea());

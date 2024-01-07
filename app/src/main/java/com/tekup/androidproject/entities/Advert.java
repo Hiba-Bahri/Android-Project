@@ -4,7 +4,10 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class Advert implements Serializable {
-     Long id;
+
+    public transient String tempKey;
+
+    Long id;
 
      String description;
 
@@ -25,7 +28,7 @@ public class Advert implements Serializable {
     public Advert() {
     }
 
-    public Advert(Long id, String description, String adType, String estateType, float surfaceArea, int nbRooms, String location, float price, String imageURL) {
+    public Advert(Long id, String description, String adType, String estateType, float surfaceArea, int nbRooms, String location, float price, String imageURL,String tempKey) {
         this.id = id;
         this.description = description;
         this.adType = adType;
@@ -35,6 +38,11 @@ public class Advert implements Serializable {
         this.location = location;
         this.price = price;
         this.imageURL = imageURL;
+        this.tempKey = tempKey;
+    }
+
+    public String getTempKey() {
+        return tempKey;
     }
 
     public Long getId() {

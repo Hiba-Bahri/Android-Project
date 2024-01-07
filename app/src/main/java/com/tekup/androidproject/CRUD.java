@@ -1,7 +1,9 @@
 package com.tekup.androidproject;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -41,6 +43,7 @@ public class CRUD extends AppCompatActivity {
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Advert advert = snapshot.getValue(Advert.class);
+                    advert.tempKey = snapshot.getKey();
                     dataArrayList.add(advert);
                 }
 
@@ -84,6 +87,60 @@ public class CRUD extends AppCompatActivity {
                 startActivityForResult(intent, 1);
             }
         });
+
+        binding.listview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                showOptionsDialog(position);
+                return true;
+            }
+        });
+    }
+
+    private void showOptionsDialog(int position) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Options")
+                .setItems(new CharSequence[]{"Delete", "Update"}, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Advert selectedAdvert = dataArrayList.get(position);
+                        switch (which) {
+                            case 0:
+                                // Delete
+                                deleteAdvert(selectedAdvert.getTempKey(), position);
+                                break;
+                            case 1:
+                                // Update
+                                updateAdvert(selectedAdvert.getTempKey(), position);
+                                break;
+                        }
+                    }
+                });
+
+        builder.create().show();
+    }
+    private void deleteAdvert(String tempKey, int position) {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("adverts");
+        databaseReference.child(tempKey).removeValue();
+        // Refresh the data after deletion
+        listAdapter.notifyDataSetChanged();
+    }
+
+    private void updateAdvert(String tempKey, int position) {
+        // Redirect to an activity to edit the fields
+        Intent intent = new Intent(CRUD.this, UpdateAdvertActivity.class);
+        // Pass necessary data to the UpdateAdvertActivity, e.g., advert key or details
+        intent.putExtra("advertKey", tempKey);
+        intent.putExtra("adType", dataArrayList.get(position).getAdType());
+        intent.putExtra("estateType", dataArrayList.get(position).getEstateType());
+        intent.putExtra("location", dataArrayList.get(position).getLocation());
+        intent.putExtra("nbRooms", dataArrayList.get(position).getNbRooms());
+        intent.putExtra("price", dataArrayList.get(position).getPrice());
+        intent.putExtra("surfaceArea", dataArrayList.get(position).getSurfaceArea());
+        intent.putExtra("description", dataArrayList.get(position).getDescription());
+        intent.putExtra("imageURL", dataArrayList.get(position).getImageURL());
+        // Start the activity for result if needed
+        startActivityForResult(intent, 2);
     }
 
     @Override

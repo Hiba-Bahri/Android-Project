@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.squareup.picasso.Picasso;
 import com.tekup.androidproject.entities.Advert;
 
 public class ListAdapter extends ArrayAdapter<Advert>{
@@ -25,9 +26,15 @@ public class ListAdapter extends ArrayAdapter<Advert>{
             view = LayoutInflater.from(getContext()).inflate(R.layout.list_item, parent, false);
         }
         ImageView listImage = view.findViewById(R.id.listImage);
-        TextView listName = view.findViewById(R.id.listName);
-        //listImage.setImageResource(advert.getImage());
-        listName.setText(advert.getDescription());
+        TextView listLocation = view.findViewById(R.id.listLocation);
+        TextView listPrice = view.findViewById(R.id.listPrice);
+        if(advert.getImageURL()!=null) {
+            Picasso.get().load(advert.getImageURL()).into(listImage);
+        }
+        listLocation.setText(advert.getLocation());
+        listPrice.setText(String.valueOf(advert.getPrice()));
+
+
         return view;
     }
 }

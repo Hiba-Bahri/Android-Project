@@ -28,7 +28,7 @@ import com.tekup.androidproject.entities.Advert;
 
 public class createAdvActivity extends AppCompatActivity {
 
-    private EditText nbRoomsInput, priceInput, editTextNumber3, descInput;
+    private EditText nbRoomsInput, priceInput, surfaceAreaInput, descInput;
     private Spinner adTypeSpinner, estateTypeSpinner, locationSpinner;
 
     private static final int PICK_IMAGE_REQUEST = 1;
@@ -43,12 +43,35 @@ public class createAdvActivity extends AppCompatActivity {
 
         nbRoomsInput = findViewById(R.id.nbRoomsInput);
         priceInput = findViewById(R.id.priceInput);
-        editTextNumber3 = findViewById(R.id.editTextNumber3);
+        surfaceAreaInput = findViewById(R.id.surfaceAreaInput);
         descInput = findViewById(R.id.descInput);
 
         adTypeSpinner = findViewById(R.id.adType);
         estateTypeSpinner = findViewById(R.id.estateType);
+
         locationSpinner = findViewById(R.id.location);
+
+        estateTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                // Check the selected estate type
+                String selectedEstateType = estateTypeSpinner.getSelectedItem().toString();
+
+                // If "Field" is selected, disable nbRoomsInput and set its value to null
+                if ("Field".equals(selectedEstateType)) {
+                    nbRoomsInput.setEnabled(false);
+                    nbRoomsInput.setText(null);
+                } else {
+                    // If any other estate type is selected, enable nbRoomsInput
+                    nbRoomsInput.setEnabled(true);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // Do nothing here if nothing is selected
+            }
+        });
 
         imageView = findViewById(R.id.imageView);
 
@@ -68,15 +91,18 @@ public class createAdvActivity extends AppCompatActivity {
                 String estateType = estateTypeSpinner.getSelectedItem().toString();
                 String location = locationSpinner.getSelectedItem().toString();
                 String nbRooms = nbRoomsInput.getText().toString();
+                Integer nbRoomsValue = 0;
                 String price = priceInput.getText().toString();
-                String surfaceArea = editTextNumber3.getText().toString();
+                String surfaceArea = surfaceAreaInput.getText().toString();
                 String description = descInput.getText().toString();
 
                 float surfaceAreaValue = Float.parseFloat(surfaceArea);
                 float priceValue = Float.parseFloat(price);
-                int nbRoomsValue = Integer.parseInt(nbRooms);
+                if(nbRooms == ""){
+                    nbRoomsValue = null;
+                }
                 // Create an Advert object with the collected data
-                Advert advert = new Advert(null, description, adType, estateType, surfaceAreaValue, nbRoomsValue, location, priceValue, null);
+                Advert advert = new Advert(null, description, adType, estateType, surfaceAreaValue, nbRoomsValue, location, priceValue, null,null);
                 // Save the Advert object to the Firebase Realtime Database
                 saveAdvertToDatabase(advert);
             }
@@ -105,11 +131,46 @@ public class createAdvActivity extends AppCompatActivity {
         // Generate a unique key for the new advert
         String key = databaseReference.push().getKey();
 
-        // Save the advert to the database using the generated key
-        databaseReference.child(key).setValue(advert);
 
-        // Optionally, you can also finish the activity or perform any other actions
-        // For example, you might want to go back to the previous activity
-        finish();
+        if (imageUri != null) {
+            storageReference = FirebaseStorage.getInstance().getReference("ad_images").child(key + "." + getFileExtension(imageUri));
+
+            storageReference.putFile(imageUri)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri downloadUri) {
+                                    advert.setImageURL(downloadUri.toString());
+                                    databaseReference.child(key).setValue(advert);
+                                    String imageUrl = advert.getImageURL();
+
+                                    finish();
+                                }
+                            });
+                        }
+
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(createAdvActivity.this, "Image upload failed", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        } else {
+
+            // Save the advert to the database using the generated key
+            databaseReference.child(key).setValue(advert);
+
+            String imageUrl= advert.getImageURL();
+
+            finish();
+        }
+    }
+    private String getFileExtension(Uri uri) {
+        ContentResolver contentResolver = getContentResolver();
+        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
+        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
     }
 }

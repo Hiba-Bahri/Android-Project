@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.SearchView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -22,6 +23,12 @@ public class MainActivity extends AppCompatActivity {
     ListAdapter listAdapter;
     ArrayList<Advert> dataArrayList = new ArrayList<>();
 
+
+
+    private String selectedFilter = "all";
+    private String currentSearchText = "";
+    private SearchView searchView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
 
         // Firebase setup
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("adverts");
+
+        initSearchWidgets();
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -51,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+
         listAdapter = new ListAdapter(MainActivity.this, dataArrayList);
         binding.listview.setAdapter(listAdapter);
         binding.listview.setClickable(true);
@@ -71,6 +82,47 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void initSearchWidgets() {
+        searchView = (SearchView) findViewById(R.id.shapeListSearchView);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                currentSearchText = s;
+                ArrayList<Advert> filteredAds = new ArrayList<>();
+
+                for (Advert ad : dataArrayList) {
+
+                    if (ad.getLocation().toLowerCase().contains(s.toLowerCase()) ||
+                            ad.getEstateType().toLowerCase().contains(s.toLowerCase()) ||
+                            ad.getAdType().toLowerCase().contains(s.toLowerCase())) {
+
+                        // Check the selected filter
+                        if (selectedFilter.equals("all") ||
+                                ad.getLocation().toLowerCase().contains(selectedFilter) ||
+                                ad.getEstateType().toLowerCase().contains(selectedFilter) ||
+                                ad.getAdType().toLowerCase().contains(selectedFilter)) {
+                            filteredAds.add(ad);
+                        }
+                    }
+                }
+
+                ListAdapter adapter = new ListAdapter(getApplicationContext(), filteredAds);
+                binding.listview.setAdapter(adapter);
+                binding.listview.setClickable(true);
+
+                return false;
+            }
+        });
+    }
+
+
 }
 
 

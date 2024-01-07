@@ -13,15 +13,20 @@ public class DetailedActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         Intent intent = this.getIntent();
         if (intent != null){
-            String name = intent.getStringExtra("name");
-            String time = intent.getStringExtra("time");
-            int ingredients = intent.getIntExtra("ingredients", R.string.maggiIngredients);
-            int desc = intent.getIntExtra("desc", R.string.maggieDesc);
+            String desc = intent.getStringExtra("description");
+            String estateType = intent.getStringExtra("estateType");
+            String adType = intent.getStringExtra("adType");
+            String location = intent.getStringExtra("location");
+            int nbRooms = intent.getIntExtra("nbRooms",0);
+            float price = intent.getFloatExtra("price", 0);
+            float surfaceArea = intent.getFloatExtra("surfaceArea", 0);
             int image = intent.getIntExtra("image", R.drawable.maggi);
-            binding.detailName.setText(name);
-            binding.detailTime.setText(time);
+            binding.detailAdType.setText(adType);
             binding.detailDesc.setText(desc);
-            binding.detailIngredients.setText(ingredients);
+            binding.detailEstateType.setText(estateType);
+            binding.detailLocation.setText(location);
+            binding.detailPrice.setText(String.valueOf((int) price));
+            binding.detailSurfaceArea.setText(String.valueOf((int) surfaceArea));
             binding.detailImage.setImageResource(image);
         }
     }

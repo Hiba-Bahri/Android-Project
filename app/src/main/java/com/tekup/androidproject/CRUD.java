@@ -1,4 +1,81 @@
 package com.tekup.androidproject;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.tekup.androidproject.databinding.ActivityCrudBinding;
+import com.tekup.androidproject.entities.Advert;
+
+import java.util.ArrayList;
+
+public class CRUD extends AppCompatActivity {
+
+    ActivityCrudBinding binding;
+    ListAdapter listAdapter;
+    ArrayList<Advert> dataArrayList = new ArrayList<>();
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        binding = ActivityCrudBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        // Firebase setup
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("adverts");
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // Clear the existing dataArrayList before adding new data
+                dataArrayList.clear();
+
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Advert advert = snapshot.getValue(Advert.class);
+                    dataArrayList.add(advert);
+                }
+
+                listAdapter.notifyDataSetChanged(); // Notify the adapter that the data has changed
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Handle errors if any
+            }
+        });
+
+        listAdapter = new ListAdapter(CRUD.this, dataArrayList);
+        binding.listview.setAdapter(listAdapter);
+        binding.listview.setClickable(true);
+
+        binding.listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(CRUD.this, DetailedActivity.class);
+                intent.putExtra("description", dataArrayList.get(i).getDescription());
+                intent.putExtra("estateType", dataArrayList.get(i).getEstateType());
+                intent.putExtra("adType", dataArrayList.get(i).getAdType());
+                intent.putExtra("location", dataArrayList.get(i).getLocation());
+                intent.putExtra("image", dataArrayList.get(i).getImage());
+                intent.putExtra("nbRooms", dataArrayList.get(i).getNbRooms());
+                intent.putExtra("price", dataArrayList.get(i).getPrice());
+                intent.putExtra("surfaceArea", dataArrayList.get(i).getSurfaceArea());
+                startActivity(intent);
+            }
+        });
+    }
+}
+
+
+/*
+package com.tekup.androidproject;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -51,4 +128,4 @@ public class CRUD extends AppCompatActivity {
             }
         });
     }
-}
+}*/

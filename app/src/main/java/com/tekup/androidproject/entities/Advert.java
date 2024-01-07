@@ -1,28 +1,30 @@
 package com.tekup.androidproject.entities;
 
-public class Advert {
-    private Long id;
+import java.io.Serializable;
 
-    private String description;
+public class Advert implements Serializable {
+     Long id;
 
-    private String adType;
+     String description;
 
-    private String estateType;
+     String adType;
 
-    private float surfaceArea;
+     String estateType;
 
-    private String nbRooms;
+     float surfaceArea;
 
-    private String location;
+     String nbRooms;
 
-    private float price;
+     String location;
 
-    private String image;
+    float price;
+
+     int image;
 
     public Advert() {
     }
 
-    public Advert(Long id, String description, String adType, String estateType, float surfaceArea, String nbRooms, String location, float price, String image) {
+    public Advert(Long id, String description, String adType, String estateType, float surfaceArea, String nbRooms, String location, float price, int image) {
         this.id = id;
         this.description = description;
         this.adType = adType;
@@ -98,11 +100,11 @@ public class Advert {
         this.price = price;
     }
 
-    public String getImage() {
+    public int getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(int image) {
         this.image = image;
     }
 }

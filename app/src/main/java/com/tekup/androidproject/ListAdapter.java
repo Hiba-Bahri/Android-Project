@@ -11,7 +11,28 @@ import java.util.ArrayList;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-public class ListAdapter extends ArrayAdapter<ListData> {
+import com.tekup.androidproject.entities.Advert;
+
+public class ListAdapter extends ArrayAdapter<Advert>{
+    public ListAdapter(@NonNull Context context, ArrayList<Advert> dataArrayList){
+        super(context, R.layout.list_item,dataArrayList);
+    }
+    @NonNull
+    @Override
+    public View getView(int position, @Nullable View view, @NonNull ViewGroup parent){
+        Advert advert = getItem(position);
+        if(view == null){
+            view = LayoutInflater.from(getContext()).inflate(R.layout.list_item, parent, false);
+        }
+        ImageView listImage = view.findViewById(R.id.listImage);
+        TextView listName = view.findViewById(R.id.listName);
+        //listImage.setImageResource(advert.getImage());
+        listName.setText(advert.getDescription());
+        return view;
+    }
+}
+
+/*public class ListAdapter extends ArrayAdapter<ListData> {
     public ListAdapter(@NonNull Context context, ArrayList<ListData> dataArrayList) {
         super(context, R.layout.list_item, dataArrayList);
     }
@@ -30,4 +51,4 @@ public class ListAdapter extends ArrayAdapter<ListData> {
         listTime.setText(listData.time);
         return view;
     }
-}
+}*/

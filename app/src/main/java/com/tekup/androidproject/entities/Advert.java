@@ -1,6 +1,7 @@
 package com.tekup.androidproject.entities;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class Advert implements Serializable {
      Long id;
@@ -13,18 +14,18 @@ public class Advert implements Serializable {
 
      float surfaceArea;
 
-     String nbRooms;
+     int nbRooms;
 
      String location;
 
     float price;
 
-     int image;
+    String imageURL;
 
     public Advert() {
     }
 
-    public Advert(Long id, String description, String adType, String estateType, float surfaceArea, String nbRooms, String location, float price, int image) {
+    public Advert(Long id, String description, String adType, String estateType, float surfaceArea, int nbRooms, String location, float price, String imageURL) {
         this.id = id;
         this.description = description;
         this.adType = adType;
@@ -33,11 +34,19 @@ public class Advert implements Serializable {
         this.nbRooms = nbRooms;
         this.location = location;
         this.price = price;
-        this.image = image;
+        this.imageURL = imageURL;
     }
 
     public Long getId() {
         return id;
+    }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 
     public void setId(Long id) {
@@ -76,11 +85,11 @@ public class Advert implements Serializable {
         this.surfaceArea = surfaceArea;
     }
 
-    public String getNbRooms() {
+    public int getNbRooms() {
         return nbRooms;
     }
 
-    public void setNbRooms(String nbRooms) {
+    public void setNbRooms(int nbRooms) {
         this.nbRooms = nbRooms;
     }
 
@@ -100,11 +109,4 @@ public class Advert implements Serializable {
         this.price = price;
     }
 
-    public int getImage() {
-        return image;
-    }
-
-    public void setImage(int image) {
-        this.image = image;
-    }
 }

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="180dp"
+    android:orientation="vertical"
+    android:background="@drawable/side_bar_bg"
+    android:gravity="bottom"
+    android:padding="15dp">
+
+    <ImageView
+        android:layout_width="155dp"
+        android:layout_height="113dp"
+        android:src="@drawable/logo" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="With High Standards"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Search For Your Future Home"
+        android:textSize="17sp"
+        />
+
+
+</LinearLayout>

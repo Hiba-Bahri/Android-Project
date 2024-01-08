@@ -28,11 +28,14 @@ public class ListAdapter extends ArrayAdapter<Advert>{
         ImageView listImage = view.findViewById(R.id.listImage);
         TextView listLocation = view.findViewById(R.id.listLocation);
         TextView listPrice = view.findViewById(R.id.listPrice);
+        TextView adType = view.findViewById(R.id.adType);
+
         if(advert.getImageURL()!=null) {
             Picasso.get().load(advert.getImageURL()).into(listImage);
         }
         listLocation.setText(advert.getLocation());
         listPrice.setText(String.valueOf(advert.getPrice()));
+        adType.setText(String.valueOf(advert.getAdType()));
 
 
         return view;

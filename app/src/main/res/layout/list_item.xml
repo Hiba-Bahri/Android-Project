@@ -23,28 +23,40 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/maggi" />
+            />
 
         <TextView
+            android:id="@+id/listLocation"
             android:layout_width="120dp"
             android:layout_height="30dp"
-            android:id="@+id/listLocation"
+            android:layout_marginStart="29dp"
+            android:layout_marginTop="25dp"
+            android:layout_toEndOf="@id/listImage"
             android:text="Name"
             android:textColor="@color/lavender"
-            android:textSize="20sp"
-            android:layout_marginTop="25dp"
-            android:layout_marginStart="30dp"
-            android:layout_toEndOf="@id/listImage"/>
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/listPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/listLocation"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="34dp"
+            android:layout_below="@+id/adType"
+            android:layout_marginStart="29dp"
+            android:layout_marginTop="7dp"
             android:layout_toEndOf="@+id/listImage"
             android:text="Price"
+            android:textColor="@color/lavender"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/adType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/listLocation"
+            android:layout_marginStart="29dp"
+            android:layout_marginTop="11dp"
+            android:layout_toEndOf="@+id/listImage"
+            android:text="Ad Type"
             android:textColor="@color/lavender"
             android:textSize="20sp" />
 

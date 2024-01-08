@@ -1,13 +1,13 @@
 package com.tekup.androidproject;
 
-import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-
-import com.tekup.androidproject.databinding.ActivityDetailedBinding;
+import androidx.appcompat.app.AppCompatActivity;
 import com.squareup.picasso.Picasso;
+import com.tekup.androidproject.databinding.ActivityDetailedBinding;
+
 public class DetailedActivity extends AppCompatActivity {
     EditText numberofroomstext;
     ActivityDetailedBinding binding;

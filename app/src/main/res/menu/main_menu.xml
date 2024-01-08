@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/facebook_icon"
+                android:icon="@drawable/facebook"
+                android:title="Facebook" />
+            <item
+                android:id="@+id/instagram_icon"
+                android:icon="@drawable/instagram"
+                android:title="Instagram" />
+            <item
+                android:id="@+id/twitter_icon"
+                android:icon="@drawable/twitter"
+                android:title="Twitter" />
+            <item
+                android:id="@+id/linkedIn_icon"
+                android:icon="@drawable/linkedin"
+                android:title="LinkedIn" />
+        </menu>
+    </item>
+</menu>
+

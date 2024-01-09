@@ -75,6 +75,8 @@ public class createAdvActivity extends AppCompatActivity {
 
         imageView = findViewById(R.id.imageView);
 
+        //Image Upload handling
+
         Button uploadImageButton = findViewById(R.id.uploadImageButton);
         uploadImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,6 +111,7 @@ public class createAdvActivity extends AppCompatActivity {
         });
     }
 
+    //Intent for file choice with startActivityForResult
     private void openFileChooser() {
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -119,7 +122,7 @@ public class createAdvActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
+        //when an image is selected from the fileChoser, the image will be set as a preview in the UI
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             imageUri = data.getData();
             imageView.setImageURI(imageUri);
@@ -127,21 +130,27 @@ public class createAdvActivity extends AppCompatActivity {
     }
 
     private void saveAdvertToDatabase(Advert advert) {
+        //We get an instance of the adverts from the database
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("adverts");
-        // Generate a unique key for the new advert
+        //We generate a unique key for the new advert
         String key = databaseReference.push().getKey();
 
-
+        //If the admin added an image to the creation form
         if (imageUri != null) {
+            //StorageReference uses the Storage service provided by Firebase, in Which we created a folder called ad_images to upload images to
             storageReference = FirebaseStorage.getInstance().getReference("ad_images").child(key + "." + getFileExtension(imageUri));
 
+            //upload the picture to the storage
             storageReference.putFile(imageUri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
+                        //if the upload is success
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            //retrieve the image Url
                             storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri downloadUri) {
+                                    //set the image Url in the advert object and save the advert object in the database
                                     advert.setImageURL(downloadUri.toString());
                                     databaseReference.child(key).setValue(advert);
                                     String imageUrl = advert.getImageURL();
@@ -153,6 +162,7 @@ public class createAdvActivity extends AppCompatActivity {
 
                     })
                     .addOnFailureListener(new OnFailureListener() {
+                        //If the image didn't upload
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             Toast.makeText(createAdvActivity.this, "Image upload failed", Toast.LENGTH_SHORT).show();
@@ -168,6 +178,7 @@ public class createAdvActivity extends AppCompatActivity {
             finish();
         }
     }
+    //This method is responsible for retrieving the file extension that we chose in the fileChoserIntent.
     private String getFileExtension(Uri uri) {
         ContentResolver contentResolver = getContentResolver();
         MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();

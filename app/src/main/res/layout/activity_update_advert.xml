@@ -13,7 +13,7 @@
         android:layout_marginTop="8dp"
         android:entries="@array/ad_Type"
         app:layout_constraintEnd_toStartOf="@+id/updateEstateType"
-        app:layout_constraintHorizontal_bias="0.507"
+        app:layout_constraintHorizontal_bias="0.486"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
@@ -22,7 +22,7 @@
         android:layout_width="113dp"
         android:layout_height="38dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="36dp"
+        android:layout_marginEnd="48dp"
         android:entries="@array/estate_Type"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
@@ -41,7 +41,7 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="140dp"
+        android:layout_marginStart="128dp"
         android:layout_marginTop="16dp"
         android:text="Update Advert"
         android:textSize="16sp"
@@ -52,7 +52,7 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
+        android:layout_marginStart="36dp"
         android:layout_marginTop="24dp"
         android:text="Advert type"
         app:layout_constraintStart_toStartOf="parent"
@@ -80,10 +80,10 @@
 
     <EditText
         android:id="@+id/updateNbRoomsInput"
-        android:layout_width="119dp"
-        android:layout_height="36dp"
+        android:layout_width="121dp"
+        android:layout_height="40dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="36dp"
+        android:layout_marginEnd="44dp"
         android:ems="10"
         android:hint="Rooms"
         android:inputType="number"
@@ -105,7 +105,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="16dp"
         android:text="Price"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/updateLocation" />
@@ -167,12 +167,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/updateBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="120dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="140dp"
+        android:layout_marginTop="36dp"
+        android:background="@color/greige"
+        android:padding="5dp"
         android:text="Update advert"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/uploadImageButton" />
@@ -181,19 +183,21 @@
         android:id="@+id/updateImageView"
         android:layout_width="101dp"
         android:layout_height="89dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="12dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/updateDescInput" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
+        android:padding="5dp"
         android:id="@+id/uploadImageButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="32dp"
+        android:background="@color/greige"
         android:text="Upload Image"
         app:layout_constraintStart_toEndOf="@+id/updateImageView"
-        app:layout_constraintTop_toBottomOf="@+id/updateDescInput"></Button>
+        app:layout_constraintTop_toBottomOf="@+id/updateDescInput"></androidx.appcompat.widget.AppCompatButton>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,6 +11,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.tekup.androidproject.databinding.ActivityCrudBinding;
 import com.tekup.androidproject.databinding.ActivityMainBinding;
 import com.tekup.androidproject.entities.Advert;
 import java.util.ArrayList;
@@ -69,12 +70,11 @@ public class MainActivity extends AppCompatActivity {
 
         // Send the filtered data to the ListAdapter
         SendInfos(dataArrayList);
-
     }
 
     private void SendInfos(ArrayList<Advert> data) {
-// Creating a new ListAdapter instance with the current activity context (CRUD.this) and a data ArrayList
-        listAdapter = new ListAdapter(MainActivity.this, dataArrayList);
+        // Creating a new ListAdapter instance with the current activity context (CRUD.this) and a data ArrayList
+        listAdapter = new ListAdapter(MainActivity.this, data);
         // Setting the adapter for the ListView in the layout using the created ListAdapter
         binding.listview.setAdapter(listAdapter);
         // Allowing the ListView to be clickable
@@ -84,33 +84,31 @@ public class MainActivity extends AppCompatActivity {
         binding.listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Advert clickedAd = data.get(i);
                 // Creating an Intent to navigate to the DetailedActivity
                 Intent intent = new Intent(MainActivity.this, DetailedActivity.class);
-                // Adding extra information to the Intent to pass to DetailedActivity
-                intent.putExtra("description", dataArrayList.get(i).getDescription());
-                intent.putExtra("estateType", dataArrayList.get(i).getEstateType());
-                intent.putExtra("adType", dataArrayList.get(i).getAdType());
-                intent.putExtra("location", dataArrayList.get(i).getLocation());
-                intent.putExtra("image", dataArrayList.get(i).getImageURL());
-                intent.putExtra("nbRooms", dataArrayList.get(i).getNbRooms());
-                intent.putExtra("price", dataArrayList.get(i).getPrice());
-                intent.putExtra("surfaceArea", dataArrayList.get(i).getSurfaceArea());
+                intent.putExtra("description", clickedAd.getDescription());
+                intent.putExtra("estateType", clickedAd.getEstateType());
+                intent.putExtra("adType", clickedAd.getAdType());
+                intent.putExtra("location", clickedAd.getLocation());
+                intent.putExtra("image", clickedAd.getImageURL());
+                intent.putExtra("nbRooms", clickedAd.getNbRooms());
+                intent.putExtra("price", clickedAd.getPrice());
+                intent.putExtra("surfaceArea", clickedAd.getSurfaceArea());
                 // Starting the DetailedActivity with the prepared Intent
                 startActivity(intent);
             }
         });
     }
 
-
+    // Method to initialize search widget
     private void initSearchWidgets() {
-        //Retrieve the searchView
-        searchView = findViewById(R.id.shapeListSearchView);
-
-        //Listener for the SearchView
+        searchView = (SearchView) findViewById(R.id.shapeListSearchView);
+        // Listener for the SearchView
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-
             @Override
             public boolean onQueryTextSubmit(String s) {
+                // Handle text submission if needed
                 return false;
             }
 
@@ -118,7 +116,6 @@ public class MainActivity extends AppCompatActivity {
             public boolean onQueryTextChange(String s) {
                 // Update the current search text
                 currentSearchText = s;
-
                 // Filter the data based on the search text and selected filter
                 ArrayList<Advert> filteredAds = new ArrayList<>();
                 for (Advert ad : dataArrayList) {
@@ -129,17 +126,21 @@ public class MainActivity extends AppCompatActivity {
                                 ad.getLocation().toLowerCase().contains(selectedFilter) ||
                                 ad.getEstateType().toLowerCase().contains(selectedFilter) ||
                                 ad.getAdType().toLowerCase().contains(selectedFilter)) {
-
                             filteredAds.add(ad);
                         }
                     }
                 }
                 // Send the filtered data to the ListAdapter
                 SendInfos(filteredAds);
-
                 return false;
             }
         });
     }
-}
 
+    // Intent to navigate to LoginActivity when the user icon is clicked
+    public void onIconButtonClick(View view) {
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(intent);
+    }
+
+}

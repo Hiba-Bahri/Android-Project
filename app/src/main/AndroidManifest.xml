@@ -20,6 +20,10 @@ xmlns:tools="http://schemas.android.com/tools">
         android:name=".createAdvActivity"
         android:exported="false" />
     <activity
+        android:name=".UpdateAdvertActivity"
+        android:exported="false"
+        />
+    <activity
         android:name=".DetailedActivity"
         android:exported="false" />
     <activity

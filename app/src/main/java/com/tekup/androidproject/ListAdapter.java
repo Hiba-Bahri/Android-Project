@@ -15,9 +15,13 @@ import com.squareup.picasso.Picasso;
 import com.tekup.androidproject.entities.Advert;
 
 public class ListAdapter extends ArrayAdapter<Advert>{
+
+    // Constructor
     public ListAdapter(@NonNull Context context, ArrayList<Advert> dataArrayList){
         super(context, R.layout.list_item,dataArrayList);
     }
+
+    // Setting the value of each item in the ListView
     @NonNull
     @Override
     public View getView(int position, @Nullable View view, @NonNull ViewGroup parent){
@@ -25,11 +29,13 @@ public class ListAdapter extends ArrayAdapter<Advert>{
         if(view == null){
             view = LayoutInflater.from(getContext()).inflate(R.layout.list_item, parent, false);
         }
+        // Getting the value of the elements
         ImageView listImage = view.findViewById(R.id.listImage);
         TextView listLocation = view.findViewById(R.id.listLocation);
         TextView listPrice = view.findViewById(R.id.listPrice);
         TextView adType = view.findViewById(R.id.adType);
 
+        // Setting the value of the elements
         if(advert.getImageURL()!=null) {
             Picasso.get().load(advert.getImageURL()).into(listImage);
         }
@@ -37,28 +43,6 @@ public class ListAdapter extends ArrayAdapter<Advert>{
         listPrice.setText(String.valueOf(advert.getPrice()));
         adType.setText(String.valueOf(advert.getAdType()));
 
-
         return view;
     }
 }
-
-/*public class ListAdapter extends ArrayAdapter<ListData> {
-    public ListAdapter(@NonNull Context context, ArrayList<ListData> dataArrayList) {
-        super(context, R.layout.list_item, dataArrayList);
-    }
-    @NonNull
-    @Override
-    public View getView(int position, @Nullable View view, @NonNull ViewGroup parent) {
-        ListData listData = getItem(position);
-        if (view == null){
-            view = LayoutInflater.from(getContext()).inflate(R.layout.list_item, parent, false);
-        }
-        ImageView listImage = view.findViewById(R.id.listImage);
-        TextView listName = view.findViewById(R.id.listName);
-        TextView listTime = view.findViewById(R.id.listTime);
-        listImage.setImageResource(listData.image);
-        listName.setText(listData.name);
-        listTime.setText(listData.time);
-        return view;
-    }
-}*/

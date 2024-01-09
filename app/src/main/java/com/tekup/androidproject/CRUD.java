@@ -29,25 +29,31 @@ public class CRUD extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Inflating the layout using ViewBinding
         binding = ActivityCrudBinding.inflate(getLayoutInflater());
+        // Setting the content view of the activity to the root view of the inflated layout
         setContentView(binding.getRoot());
 
         // Firebase setup
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("adverts");
 
+        // Adding a ValueEventListener to the databaseReference
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // Clear the existing dataArrayList before adding new data
                 dataArrayList.clear();
-
+                // Retrieve Advert objects
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Advert advert = snapshot.getValue(Advert.class);
+                    // Set a temporary key for the advert using the snapshot's key
                     advert.tempKey = snapshot.getKey();
+                    // Add the advert to the dataArrayList
                     dataArrayList.add(advert);
                 }
-
-                listAdapter.notifyDataSetChanged(); // Notify the adapter that the data has changed
+                // Notify the adapter that the data has changed
+                listAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -56,15 +62,20 @@ public class CRUD extends AppCompatActivity {
             }
         });
 
-        // Initialize ListView and Adapter
+        // Creating a new ListAdapter instance with the current activity context (CRUD.this) and a data ArrayList
         listAdapter = new ListAdapter(CRUD.this, dataArrayList);
+        // Setting the adapter for the ListView in the layout using the created ListAdapter
         binding.listview.setAdapter(listAdapter);
+        // Allowing the ListView to be clickable
         binding.listview.setClickable(true);
 
+        // Setting an OnItemClickListener for the ListView
         binding.listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                // Creating an Intent to navigate to the DetailedActivity
                 Intent intent = new Intent(CRUD.this, DetailedActivity.class);
+                // Adding extra information to the Intent to pass to DetailedActivity
                 intent.putExtra("description", dataArrayList.get(i).getDescription());
                 intent.putExtra("estateType", dataArrayList.get(i).getEstateType());
                 intent.putExtra("adType", dataArrayList.get(i).getAdType());
@@ -73,6 +84,7 @@ public class CRUD extends AppCompatActivity {
                 intent.putExtra("nbRooms", dataArrayList.get(i).getNbRooms());
                 intent.putExtra("price", dataArrayList.get(i).getPrice());
                 intent.putExtra("surfaceArea", dataArrayList.get(i).getSurfaceArea());
+                // Starting the DetailedActivity with the prepared Intent
                 startActivity(intent);
             }
         });

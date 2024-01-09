@@ -100,8 +100,10 @@ public class createAdvActivity extends AppCompatActivity {
 
                 float surfaceAreaValue = Float.parseFloat(surfaceArea);
                 float priceValue = Float.parseFloat(price);
-                if(nbRooms == ""){
+                if ("".equals(nbRooms)) {
                     nbRoomsValue = null;
+                } else {
+                    nbRoomsValue = Integer.parseInt(nbRooms);
                 }
                 // Create an Advert object with the collected data
                 Advert advert = new Advert(null, description, adType, estateType, surfaceAreaValue, nbRoomsValue, location, priceValue, null,null);

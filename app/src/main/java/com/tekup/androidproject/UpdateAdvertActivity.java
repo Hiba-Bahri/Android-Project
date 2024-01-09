@@ -47,6 +47,7 @@ public class UpdateAdvertActivity extends AppCompatActivity {
         uploadImageButton = findViewById(R.id.uploadImageButton);
         updateBtn = findViewById(R.id.updateBtn);
 
+        //Getting the intent
         Intent intent = getIntent();
         advertKey = intent.getStringExtra("advertKey");
         String adType = intent.getStringExtra("adType");
@@ -58,6 +59,7 @@ public class UpdateAdvertActivity extends AppCompatActivity {
         String description = intent.getStringExtra("description");
         String imageURL = intent.getStringExtra("imageURL");
 
+        //Here we're filling, the forms with the data coming from the CRUD class
         updateAdType.setSelection(getIndex(updateAdType, adType));
         updateEstateType.setSelection(getIndex(updateEstateType, estateType));
         updateLocation.setSelection(getIndex(updateLocation, location));
@@ -84,6 +86,8 @@ public class UpdateAdvertActivity extends AppCompatActivity {
         });
 
     }
+
+    //This getIndex is made to retrieve the value of the spinner selections
     private int getIndex(Spinner spinner, String value) {
         for (int i = 0; i < spinner.getCount(); i++) {
             if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(value)) {
@@ -92,6 +96,7 @@ public class UpdateAdvertActivity extends AppCompatActivity {
         }
         return 0; // Default to the first item if not found
     }
+    //File choser
     private void openImageChooser() {
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -125,19 +130,27 @@ public class UpdateAdvertActivity extends AppCompatActivity {
 
         if (imageUri != null) {
             uploadImage(advertKey, imageUri);
+        }else {
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("adverts");
+            databaseReference.child(advertKey).child("imageURL").get().addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    String existingImageUrl = task.getResult().getValue(String.class);
+
+                    // Create an updated Advert object with the existing imageURL
+                    Advert updatedAdvert = new Advert(null, description, adType, estateType, surfaceAreaValue,
+                            nbRoomsValue, location, priceValue, existingImageUrl, advertKey);
+
+                    // Update the advert in the Firebase Realtime Database using the existing key
+                    databaseReference.child(advertKey).setValue(updatedAdvert);
+
+                    // Go back to the previous activity
+                    finish();
+                }
+            });
         }
-        // Create an updated Advert object
-        Advert updatedAdvert = new Advert(null, description, adType, estateType, surfaceAreaValue, nbRoomsValue, location, priceValue, null,advertKey);
-
-        // Update the advert in the Firebase Realtime Database using the existing key
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("adverts");
-        databaseReference.child(advertKey).setValue(updatedAdvert);
-
-        // Optionally, you can finish the activity or perform any other actions
-        // For example, you might want to go back to the previous activity
-        finish();
     }
 
+    //This is like the creation, We upload a picture to the ad_images folder in the storage service
     private void uploadImage(String advertKey, Uri imageUri) {
         StorageReference storageReference = FirebaseStorage.getInstance().getReference("ad_images").child(advertKey);
         storageReference.putFile(imageUri)

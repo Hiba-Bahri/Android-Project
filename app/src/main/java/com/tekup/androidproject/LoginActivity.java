@@ -18,6 +18,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText txtEmail;
     private EditText txtPassword;
 
+    //Firebase Auth is a firebase Service
     private FirebaseAuth mAuth;
 
     @Override
@@ -25,6 +26,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        //get an Instance of the firebase auth service
         mAuth = FirebaseAuth.getInstance();
 
         this.txtEmail = (EditText) findViewById(R.id.loginInput);
@@ -33,12 +35,12 @@ public class LoginActivity extends AppCompatActivity {
         findViewById(R.id.loginBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //We retrieve the email and password of the input
                 String email=txtEmail.getText().toString();
                 String pwd=txtPassword.getText().toString();
                 System.out.println("--------------------------------------------");
                 System.out.println(email);
                 System.out.println(pwd);
-
                 signIn(email,pwd);
 
             }
@@ -46,19 +48,22 @@ public class LoginActivity extends AppCompatActivity {
     }
         private void signIn(String email, String pwd) {
 
+
+            // We're using the Email and password provider that Firebase Authentication Service provides
             mAuth.signInWithEmailAndPassword(email, pwd)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
+                            //Sign in success,
                             if (task.isSuccessful()) {
-                                // Sign in success, update UI or navigate to the next activity
+                                //Update UI or navigate to the next activity
                                 Intent intent = new Intent(LoginActivity.this, CRUD.class);
                                 startActivity(intent);
                                 finish();
-                            } else {
-                                // If sign in fails, display a message to the user.
-                                Toast.makeText(LoginActivity.this, "Authentication failed.",
-                                        Toast.LENGTH_SHORT).show();
+                            } //If sign in fails
+                            else {
+                                //Display a message to the user.
+                                Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
